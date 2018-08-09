@@ -23,7 +23,7 @@ RUN sed -i \
         ${fpm_conf}
 
 
-ADD deploy/swoole_loader72.so /usr/local/php56/lib/php/extensions/no-debug-non-zts-20131226/swoole_loader72.so
+ADD deploy/swoole_loader72.so /usr/local/php56/lib/php/extensions/no-debug-non-zts-20170718/swoole_loader72.so
 ADD deploy/libsodium.so.23 /usr/lib64/libsodium.so.23
 
 
