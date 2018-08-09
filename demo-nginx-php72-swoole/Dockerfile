@@ -17,7 +17,7 @@ RUN yum clean all &&\
     yum install perl perl-Data-Dumper libaio* libnuma* -y  &&\
     yum clean all && rm -rf /tmp/* && rm -rf /var/tmp/*
 
-ENV fpm_conf /usr/local/php72/etc/php-fpm.conf
+ENV fpm_conf /usr/local/php72/etc/php-fpm.d/www.conf
 RUN sed -i \
         -e "s/pm.max_children = 128/pm.max_children = 5/g" \
         ${fpm_conf}
