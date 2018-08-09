@@ -27,6 +27,12 @@ ADD deploy/swoole_loader72.so /usr/local/php72/lib/php/extensions/no-debug-non-z
 ADD deploy/libsodium.so.23 /usr/lib64/libsodium.so.23
 ADD conf/swoole_loader.ini /usr/local/php72/etc/php.d/swoole_loader.ini
 
+#copy nginx-site
+RUN rm -Rf  /usr/local/nginx/conf/vhosts/* && rm -Rf /usr/local/nginx/conf/nginx.conf
+ADD conf/nginx.conf /usr/local/nginx/conf/nginx.conf
+ADD conf/nginx-site.conf /usr/local/nginx/conf/vhosts/nginx-site.conf
+
+
 #ADD link
 RUN ln -s /usr/local/php72/bin/php /usr/local/bin/php &&\
 ln -s /usr/local/nginx/sbin/nginx /usr/local/sbin/nginx
