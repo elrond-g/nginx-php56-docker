@@ -11,19 +11,43 @@ RUN mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backu
 
 # 安装软件
 RUN yum clean all &&\
-    curl -o /etc/yum.repos.d/shopex-lnmp.el7.repo http://mirrors.shopex.cn/shopex/shopex-lnmp/shopex-lnmp.repo &&\
+    curl -o /etc/yum.repos.d/shopex-lnmp.repo http://mirrors.shopex.cn/shopex/shopex-lnmp/shopex-lnmp.repo &&\
     yum install epel-release -y &&\
-    yum install php-fpm56 ngx_openresty php-memcache56  redis -y &&\
+    yum install php-fpm72 ngx_openresty php-memcache72 -y &&\
     yum install perl perl-Data-Dumper libaio* libnuma* -y  &&\
     yum clean all && rm -rf /tmp/* && rm -rf /var/tmp/*
 
-ENV fpm_conf /usr/local/php56/etc/php-fpm.conf
+ENV fpm_conf /usr/local/php72/etc/php-fpm.conf
 RUN sed -i \
         -e "s/pm.max_children = 128/pm.max_children = 5/g" \
         ${fpm_conf}
 
 
-ADD deploy/swoole_loader72.so /usr/local/php56/lib/php/extensions/no-debug-non-zts-20170718/swoole_loader72.so
+ADD deploy/swoole_loader72.so /usr/local/php72/lib/php/extensions/no-debug-non-zts-20170718/swoole_loader72.so
 ADD deploy/libsodium.so.23 /usr/lib64/libsodium.so.23
 
+#ADD link
+RUN ln -s /usr/local/php72/bin/php /usr/local/bin/php &&\
+ln -s /usr/local/nginx/sbin/nginx /usr/local/sbin/nginx
 
+
+#copy supervisord
+RUN rm -Rf /etc/supervisord.conf
+ADD conf/supervisord.conf /etc/supervisord.conf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+EXPOSE 443 80 22
+
+CMD ["/start.sh"]
