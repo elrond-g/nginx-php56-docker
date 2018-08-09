@@ -25,7 +25,7 @@ RUN sed -i \
 
 ADD deploy/swoole_loader72.so /usr/local/php72/lib/php/extensions/no-debug-non-zts-20170718/swoole_loader72.so
 ADD deploy/libsodium.so.23 /usr/lib64/libsodium.so.23
-ADD conf/swoole_loader.ini /usr/local/php56/etc/php.d/swoole_loader.ini
+ADD conf/swoole_loader.ini /usr/local/php72/etc/php.d/swoole_loader.ini
 
 #ADD link
 RUN ln -s /usr/local/php72/bin/php /usr/local/bin/php &&\
